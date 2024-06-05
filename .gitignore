@@ -27,3 +27,9 @@ go.work
 
 # os system
 .DS_Store
+
+# 文件夹
+/.idea/
+
+# 项目
+/demo/

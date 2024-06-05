@@ -31,4 +31,8 @@ func InitConfig() {
 		panic(err)
 	}
 	Config = config
+
+	/* fixme 手动创建Config */
+	//Config = viper.New()
+	//Config.Set("token.coze", "")
 }

@@ -6,6 +6,7 @@ import (
 	"github.com/bincooo/chatgpt-adapter/internal/gin.handler/response"
 	"github.com/bincooo/chatgpt-adapter/internal/plugin"
 	"github.com/bincooo/chatgpt-adapter/logger"
+	"github.com/bincooo/chatgpt-adapter/pkg"
 	"github.com/bincooo/coze-api"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -43,7 +44,11 @@ type API struct {
 }
 
 func (API) Match(ctx *gin.Context, model string) bool {
-	if Model == model {
+	/* fixme 以插件形式检测模型，NextChat暂时无法自定义model，所以使用gpt-3.5-turbo */
+	//if Model == model {
+	//	return true
+	//}
+	if Model == model || "gpt-3.5-turbo" == model {
 		return true
 	}
 
@@ -78,7 +83,9 @@ func (API) Models() []plugin.Model {
 
 func (API) Completion(ctx *gin.Context) {
 	var (
-		cookie     = ctx.GetString("token")
+		/* fixme 从配置中读取token */
+		//cookie     = ctx.GetString("token")
+		cookie     = pkg.Config.GetString("token.coze")
 		proxies    = ctx.GetString("proxies")
 		notebook   = ctx.GetBool("notebook")
 		completion = common.GetGinCompletion(ctx)
